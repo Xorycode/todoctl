@@ -90,8 +90,13 @@ What would you like to do?
 
         let mut option = String::new();
         io::stdin().read_line(&mut option)?;
-        
+        let option: u32 = option.trim().parse().expect("Failed to parse");
+
+        match option {
+            1 => add_item(todo_file_path),
+            2 => remove_item(todo_file_path),
+            3 => std::process::exit(0),
+            _ => main().expect("Failed to restart..?")
+        }
     }
-    
-    Ok(())
 }
