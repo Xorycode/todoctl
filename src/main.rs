@@ -22,10 +22,6 @@ fn add_item(todo_file_path: PathBuf) {
         .expect("Could not open todo.txt");
 
     writeln!(file, "{}", to_add).expect("Failed to write to todo.txt");
-    println!("");
-    println!("");
-    println!("{}", to_add);
-    
 }
 
 fn remove_item(todo_file_path: PathBuf) {
@@ -61,7 +57,7 @@ fn remove_item(todo_file_path: PathBuf) {
     let mut file_writer = BufWriter::new(file);
     
     for line in lines {
-        write!(file_writer, "{}\n", line).expect("Could not write to todo.txt.");
+        writeln!(file_writer, "{}", line).expect("Could not write to todo.txt.");
         file_writer.flush().expect("Failed to flush changes to todo.txt");
     }
 }
@@ -92,6 +88,7 @@ What would you like to do?
         io::stdin().read_line(&mut option)?;
         let option: u32 = option.trim().parse().expect("Failed to parse");
 
+        #[warn(clippy::main_recursion)]
         match option {
             1 => add_item(todo_file_path),
             2 => remove_item(todo_file_path),
